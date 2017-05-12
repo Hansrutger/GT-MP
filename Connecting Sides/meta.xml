@@ -1,0 +1,9 @@
+﻿<meta>
+  <info name="CEFResource" author="Hansrutger" />
+
+  <script src="Javascript/CEF.js" type="client" lang="javascript" />
+  <script src="CEFCommands.cs" type="server" lang="csharp" />
+
+  <file src="Designs/blackbox.html" />
+  <file src="Designs/main.css" />
+</meta>
