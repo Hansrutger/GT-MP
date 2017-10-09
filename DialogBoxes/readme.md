@@ -29,7 +29,9 @@ API.triggerClientEvent(Client player, ...);
 
 ### dbx_text_scroll
 ```csharp
-API.triggerClientEvent(Client player, string dialog_type, string function, string title, string text, int buttons, string buttonName1, string buttonNameN, string textfieldTxt1, string textfieldTxtN);
+API.triggerClientEvent(Client player, string dialog_type, string function,
+  string title, string text, int buttons, string buttonName1, string buttonNameN,
+  string textfieldTxt1, string textfieldTxtN);
 ```
 - Client player: is the player that will be seeing the dialog
 - string dialog_type: would be which dialog (look above on the type-list)
@@ -44,8 +46,9 @@ API.triggerClientEvent(Client player, string dialog_type, string function, strin
 
 
 
-
-
+***
+***
+***
 
 ## MIT License
 Copyright (c) 2017 Hansrutger
