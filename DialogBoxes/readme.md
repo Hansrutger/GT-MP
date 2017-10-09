@@ -10,43 +10,6 @@ You simply use the implement the javascript files into your project, along with 
 - Text_Scrollbar.js
 
 
-## How to use them?
-There are different types of dialogs, but most formats are "dbx_type_subtype":
-
-### Types and their Subtypes
-- Text
-  - Scrollbar ('dbx_text_scroll')
-  - Plain (not implemented)
-- Options
-  - Scrollbar (not implemented)
-
-
-### Usage
-In order to display a dialog box all you have to do is to trigger the correct type of dialog box from the server-side through "triggerClientEvent". An example:
-```csharp
-API.triggerClientEvent(Client player, ...);
-```
-
-### dbx_text_scroll
-![](https://i.imgur.com/bAboJDG.png)
-```csharp
-API.triggerClientEvent(Client player, string dialog_type, string function,
-  string title, string text, int buttons, string buttonName1, string buttonNameN,
-  string textfieldTxt1, string textfieldTxtN);
-```
-- **Client player**: is the player that will be seeing the dialog
-- **string dialog_type**: would be which dialog (look above on the type-list)
-- **string function**: this is the eventname that will be sent back to the server-side once the player chooses to press a button
-- **string title**: text of the title
-- **string text**: text of the main context (below title)
-- **int buttons**: to tell how many buttons you wish to have (minimum 1, maximum 3)
-- **string buttonName1**: the button text of the first button
-- **string buttonNameN**: the button text of the N-th button
-- **string textfieldTxt1**: the text of the first textfield in the scrollbar box
-- **string textfieldTxtN**: the text of the N-th textfield in the scrollbar box
-
-
-
 
 ## MIT License
 Copyright (c) 2017 Hansrutger
