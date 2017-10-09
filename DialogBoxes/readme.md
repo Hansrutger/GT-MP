@@ -33,22 +33,17 @@ API.triggerClientEvent(Client player, string dialog_type, string function,
   string title, string text, int buttons, string buttonName1, string buttonNameN,
   string textfieldTxt1, string textfieldTxtN);
 ```
-- Client player: is the player that will be seeing the dialog
-- string dialog_type: would be which dialog (look above on the type-list)
-- string function: this is the eventname that will be sent back to the server-side once the player chooses to press a button
-- string title: text of the title
-- string text: text of the main context (below title)
-- int buttons: to tell how many buttons you wish to have (minimum 1, maximum 3)
-- string buttonName1: the button text of the first button
-- string buttonNameN: the button text of the N-th button
-- string textfieldTxt1: the text of the first textfield in the scrollbar box
-- string textfieldTxtN: the text of the N-th textfield in the scrollbar box
+- **Client player**: is the player that will be seeing the dialog
+- **string dialog_type**: would be which dialog (look above on the type-list)
+- **string function**: this is the eventname that will be sent back to the server-side once the player chooses to press a button
+- **string title**: text of the title
+- **string text**: text of the main context (below title)
+- **int buttons**: to tell how many buttons you wish to have (minimum 1, maximum 3)
+- **string buttonName1**: the button text of the first button
+- **string buttonNameN**: the button text of the N-th button
+- **string textfieldTxt1**: the text of the first textfield in the scrollbar box
+- **string textfieldTxtN**: the text of the N-th textfield in the scrollbar box
 
-
-
-***
-***
-***
 
 ## MIT License
 Copyright (c) 2017 Hansrutger
