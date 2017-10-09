@@ -28,7 +28,7 @@ API.triggerClientEvent(Client player, ...);
 ```
 
 ### dbx_text_scroll
-(https://i.imgur.com/bAboJDG.png)
+![](https://i.imgur.com/bAboJDG.png)
 ```csharp
 API.triggerClientEvent(Client player, string dialog_type, string function,
   string title, string text, int buttons, string buttonName1, string buttonNameN,
