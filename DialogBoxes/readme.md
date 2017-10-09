@@ -4,13 +4,6 @@
 These were created to make it easier to show players "templated dialogs". There are a few different ones and they are per-player customizable when it comes to coloring (you can change the color for whichever player whenever throughout their session). 
 
 
-## How to install?
-You simply use the implement the javascript files into your project, along with the csharp file and include them in the meta.xml file. The following files that are in this repository must be included:
-- DBXHandler.cs
-- Text_Scrollbar.js
-
-
-
 ## MIT License
 Copyright (c) 2017 Hansrutger
 
