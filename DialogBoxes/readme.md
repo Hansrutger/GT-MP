@@ -44,7 +44,7 @@ API.triggerClientEvent(Client player, string dialog_type, string function,
 - **string textfieldTxt1**: the text of the first textfield in the scrollbar box
 - **string textfieldTxtN**: the text of the N-th textfield in the scrollbar box
 
-
+>! spoiler
 
 ## MIT License
 Copyright (c) 2017 Hansrutger
