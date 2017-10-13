@@ -280,7 +280,7 @@ API.onUpdate.connect(function () {
 			}
 
 			// Dropdown-scroll-blip
-			API.drawRectangle((res.Width / 2) + (wsize / 2) - 67.5, (res.Height / 2) - (hsize / 2) + 260 + ((bsize / (dbx_field_count - (dbx_display_fields - 1))) * dbx_fieldHolder), 35, bsize / (dbx_field_count - dbx_display_fields), 150, 150, 150, 200);
+			API.drawRectangle((res.Width / 2) + (wsize / 2) - 67.5, (res.Height / 2) - (hsize / 2) + 260 + ((bsize / (dbx_field_count - (dbx_display_fields - 1))) * dbx_fieldHolder), 35, bsize / (dbx_field_count - (dbx_display_fields - 1)), 150, 150, 150, 200);
 
 			// Dropdown-textfields
 			var fieldcounter = 0;
@@ -391,7 +391,7 @@ API.onKeyDown.connect(function (sender, e) {
 	if (dbx_isenabled) {
 		if (dbx_ishovered || dbx_isadvancedhovered) {
 			// Down arrow (keyboard)
-			if (e.KeyCode == Keys.Down && dbx_fieldHolder < dbx_field_count - 9) {
+			if (e.KeyCode == Keys.Down && dbx_fieldHolder < dbx_field_count - dbx_display_fields) {
 				dbx_fieldHolder++;
 			}
 
