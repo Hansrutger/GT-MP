@@ -2,7 +2,7 @@
   <info name="ExampleResource" author="ExampleAuthor" />
   
   <!-- Any command controllers -->
-  <script src="Commands/DialogDisplayer" type="server" lang="csharp" />
+  <script src="Commands/DialogDisplayer.cs" type="server" lang="csharp" />
   
   <!-- Any standard dialog files -->
   <script src="DialogHandler/DBXHandler.cs" type="server" lang="csharp" />
