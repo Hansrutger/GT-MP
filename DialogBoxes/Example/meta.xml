@@ -1,0 +1,13 @@
+<meta>
+  <info name="ExampleResource" author="ExampleAuthor" />
+  
+  <!-- Any command controllers -->
+  <script src="Commands/DialogDisplayer" type="server" lang="csharp" />
+  
+  <!-- Any standard dialog files -->
+  <script src="DialogHandler/DBXHandler.cs" type="server" lang="csharp" />
+  <script src="DialogHandler/Text_Scrollbar.js" type="client" lang="javascript" />
+  <script src="DialogHandler/Text_Input.js" type="client" lang="javascript" />
+  <script src="DialogHandler/Option_Dropdown.js" type="client" lang="javascript" />
+  <script src="DialogHandler/Option_Scrollbar.js" type="client" lang="javascript" />
+</meta>
