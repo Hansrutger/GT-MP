@@ -1,7 +1,7 @@
 # Dialog Boxes (DBX)
 
 ## Introduction
-These were created to make it easier to show players "templated dialogs". There are a few different ones and they are per-player customizable when it comes to coloring (you can change the color for whichever player whenever throughout their session). 
+These were created to make it easier to show players "templated dialogs". There are a few different ones and they are per-player customizable when it comes to coloring (you can change the color for whichever player whenever throughout their session). Look at the wiki for more information about how to use them: https://github.com/Hansrutger/GT-MP/wiki/dbx_Setup
 
 
 ## MIT License
