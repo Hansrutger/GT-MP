@@ -246,10 +246,10 @@ API.onUpdate.connect(function () {
 		API.drawRectangle((res.Width / 2) - (wsize / 2) + 30, (res.Height / 2) - (hsize / 2) + 180, wsize - 60, 45, 200, 200, 200, 200);
 
 		// Dropdown-arrow
-		API.drawText("4", (res.Width / 2) - (wsize / 2) + wsize - 50, (res.Height / 2) - (hsize / 2) + 179, 0.4, 255, 255, 255, 255, 3, 1, true, true, 0);
+		API.drawText("4", (res.Width / 2) - (wsize / 2) + wsize - 50, (res.Height / 2) - (hsize / 2) + 179, 0.3, 255, 255, 255, 255, 3, 1, true, true, 0);
 
 		// Dropdown-def-text
-		API.drawText(dbx_fieldtext[dbx_selectedfield], (res.Width / 2) - (wsize / 2) + 45, (res.Height / 2) - (hsize / 2) + 185, 0.4, 255, 255, 255, 255, 0, 0, true, true, 0);
+		API.drawText(dbx_fieldtext[dbx_selectedfield], (res.Width / 2) - (wsize / 2) + 55, (res.Height / 2) - (hsize / 2) + 189, 0.33, 255, 255, 255, 255, 0, 0, true, true, 0);
 
 		// Bottom-Buttons (I have reversed it so that it counts from 2, 1, 0 instead of up because we have a "static" hsize-variable
 		if (!dbx_ishovered && !dbx_isadvancedhovered) {
@@ -289,7 +289,7 @@ API.onUpdate.connect(function () {
 					if (i == dbx_selectedfield) {
 						API.drawRectangle((res.Width / 2) - (wsize / 2) + 30, (res.Height / 2) - (hsize / 2) + 224 + (fieldcounter * 42.5), wsize - 100, 40, buttonbackground_r, buttonbackground_g, buttonbackground_b, buttonbackground_a);
 					}
-					API.drawText(dbx_fieldtext[i], (res.Width / 2) - (wsize / 2) + 45, (res.Height / 2) - (hsize / 2) + 225 + (fieldcounter * 42.5), 0.4, txtfield_r, txtfield_g, txtfield_b, txtfield_a, 0, 0, true, true, wsize - 60);
+					API.drawText(dbx_fieldtext[i], (res.Width / 2) - (wsize / 2) + 45, (res.Height / 2) - (hsize / 2) + 229 + (fieldcounter * 42.5), 0.33, txtfield_r, txtfield_g, txtfield_b, txtfield_a, 0, 0, true, true, wsize - 60);
 					fieldcounter++;
 				}
 			}
@@ -388,15 +388,17 @@ API.onUpdate.connect(function () {
 });
 
 API.onKeyDown.connect(function (sender, e) {
-	if (dbx_ishovered || dbx_isadvancedhovered) {
-		// Down arrow (keyboard)
-		if (e.KeyCode == Keys.Down && dbx_fieldHolder < dbx_field_count - 9) {
-			dbx_fieldHolder++;
-		}
+	if (dbx_isenabled) {
+		if (dbx_ishovered || dbx_isadvancedhovered) {
+			// Down arrow (keyboard)
+			if (e.KeyCode == Keys.Down && dbx_fieldHolder < dbx_field_count - 9) {
+				dbx_fieldHolder++;
+			}
 
-		// Up arrow (keyboard)
-		if (e.KeyCode == Keys.Up && dbx_fieldHolder > 0) {
-			dbx_fieldHolder--;
+			// Up arrow (keyboard)
+			if (e.KeyCode == Keys.Up && dbx_fieldHolder > 0) {
+				dbx_fieldHolder--;
+			}
 		}
 	}
 });
