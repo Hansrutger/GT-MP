@@ -46,6 +46,7 @@ var dbx_text = "";
 var dbx_buttontext = [];
 var dbx_realText = "";
 var dbx_censorText = "";
+var dbx_error = "";
 
 // Counters
 var dbx_button_count = 0;
@@ -130,17 +131,25 @@ API.onServerEventTrigger.connect(function (eventName, args) {
 		}
 		else {
 			dbx_iscensored = args[4][lastarg];
+			lastarg++;
+		}
+
+		if (args[4].Count <= lastarg) {
+			dbx_error = "";
+		}
+		else {
+			dbx_error = args[4][lastarg];
 		}
 
 		switch (dbx_button_count) {
 			case 1:
-				hsize = 350;
+				hsize = 370;
 				break;
 			case 2:
-				hsize = 400;
+				hsize = 420;
 				break;
 			case 3:
-				hsize = 450;
+				hsize = 470;
 				break;
 		}
 
@@ -186,17 +195,25 @@ API.onServerEventTrigger.connect(function (eventName, args) {
 		}
 		else {
 			dbx_iscensored = args[lastarg];
+			lastarg++;
+		}
+
+		if (args.Count <= lastarg) {
+			dbx_error = "";
+		}
+		else {
+			dbx_error = args[lastarg];
 		}
 		
 		switch (dbx_button_count) {
 			case 1:
-				hsize = 350;
+				hsize = 370;
 				break;
 			case 2:
-				hsize = 400;
+				hsize = 420;
 				break;
 			case 3:
-				hsize = 450;
+				hsize = 470;
 				break;
 		}
 
@@ -235,10 +252,14 @@ API.onUpdate.connect(function () {
 
 		API.drawRectangle((res.Width / 2) - (wsize / 2) + 30, (res.Height / 2) - (hsize / 2) + 200, wsize - 60, 40, inputbox_r, inputbox_g, inputbox_b, inputbox_a);
 
+		if (dbx_error.length != 0) {
+			API.drawText(dbx_error, (res.Width / 2), (res.Height / 2) - (hsize / 2) + 245, 0.3, 255, 0, 0, 255, 0, 1, true, true, 0);
+		}
+
 		// Buttons
 		for (var i = 0; i < dbx_button_count; i++) {
-			API.drawRectangle((res.Width / 2) - (wsize / 2) + 30, (res.Height / 2) - (hsize / 2) + 280 + (i * 50), wsize - 60, 40, buttonbackground_r, buttonbackground_g, buttonbackground_b, buttonbackground_a);
-			API.drawText(dbx_buttontext[i], (res.Width / 2), (res.Height / 2) - (hsize / 2) + 280 + (i * 50), 0.5, buttontext_r, buttontext_g, buttontext_b, buttontext_a, 6, 1, true, true, 0);
+			API.drawRectangle((res.Width / 2) - (wsize / 2) + 30, (res.Height / 2) - (hsize / 2) + 300 + (i * 50), wsize - 60, 40, buttonbackground_r, buttonbackground_g, buttonbackground_b, buttonbackground_a);
+			API.drawText(dbx_buttontext[i], (res.Width / 2), (res.Height / 2) - (hsize / 2) + 300 + (i * 50), 0.5, buttontext_r, buttontext_g, buttontext_b, buttontext_a, 6, 1, true, true, 0);
 		}
 
 		// Button clicking
@@ -247,7 +268,7 @@ API.onUpdate.connect(function () {
 				var pf = API.getCursorPositionMaintainRatio();
 
 				var wmin = (res.Width / 2) - (wsize / 2) + 30;
-				var hmin = (res.Height / 2) - (hsize / 2) + 280 + (i * 50);
+				var hmin = (res.Height / 2) - (hsize / 2) + 300 + (i * 50);
 				var wmax = wmin + (wsize - 60);
 				var hmax = hmin + 40;
 
