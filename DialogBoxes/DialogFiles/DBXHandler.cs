@@ -1,5 +1,5 @@
-using System;
 using GrandTheftMultiplayer.Server.API;
+using System;
 using GrandTheftMultiplayer.Server.Elements;
 
 namespace RPResource.GeneralFunc.Dialogs
@@ -22,6 +22,11 @@ namespace RPResource.GeneralFunc.Dialogs
         public static void ShowDialog(Client player, string dialog_type, string function, string title, string text, int buttons, params object[] args)
         {
             API.shared.triggerClientEvent(player, dialog_type + "_pre", function, title, text, buttons, args);
+        }
+
+        public static void ShowListDialog(Client player, string dialog_type, string function, string title, string text, int buttons, params object[] args)
+        {
+            API.shared.triggerClientEvent(player, dialog_type + "_list", function, title, text, buttons, args);
         }
 
         #region Functions: dbx_option_dropdown
