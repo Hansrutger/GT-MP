@@ -8,8 +8,8 @@ var background_b = 0;
 var background_a = 200;
 
 var title_r = 255;
-var title_g = 0;
-var title_b = 0;
+var title_g = 211;
+var title_b = 56;
 var title_a = 255;
 
 var text_r = 255;
@@ -44,6 +44,7 @@ var dbx_title = "";
 var dbx_text = "";
 var dbx_buttontext = [];
 var dbx_fieldtext = [];
+var dbx_display_fields = 9;
 
 // Counters
 var dbx_button_count = 0;
@@ -129,6 +130,104 @@ API.onServerEventTrigger.connect(function (eventName, args) {
 		dbx_field_count = 0;
 		for (var i = lastarg; i < args[4].Count; i++) {
 			dbx_fieldtext.push(args[4][i]);
+			dbx_field_count++;
+		}
+
+		switch (dbx_button_count) {
+			case 1:
+				hsize = 580;
+				break;
+			case 2:
+				hsize = 630;
+				break;
+			case 3:
+				hsize = 680;
+				break;
+		}
+
+		bsize = 237;
+
+		API.showCursor(true);
+		dbx_isenabled = true;
+		dbx_fieldHolder = 0;
+	}
+	else if (eventName == "dbx_text_scroll_list") {
+		if (!(0 in args)) {
+			API.triggerServerEvent("dbx_log", "[DBX Error] You didn't input any arguments when using 'dbx_text_scroll'.");
+			return;
+		}
+
+		dbx_finishfunction = args[0];
+		if (dbx_finishfunction == "") {
+			API.triggerServerEvent("dbx_log", "[DBX Error] No return function has been given in 'dbx_text_scroll'.");
+			return;
+		}
+
+		dbx_title = args[1];
+		dbx_text = args[2];
+		dbx_button_count = args[3];
+
+
+		var lastarg = 0;
+		dbx_buttontext = [];
+		for (var i = 0; i < dbx_button_count; i++) {
+			dbx_buttontext.push(args[4][i]);
+			lastarg++;
+		}
+
+		dbx_fieldtext = [];
+		dbx_field_count = 0;
+		for (var i = 0; i < args[4][lastarg].Count; i++) {
+			dbx_fieldtext.push(args[4][lastarg][i]);
+			dbx_field_count++;
+		}
+
+		switch (dbx_button_count) {
+			case 1:
+				hsize = 580;
+				break;
+			case 2:
+				hsize = 630;
+				break;
+			case 3:
+				hsize = 680;
+				break;
+		}
+
+		bsize = 237;
+
+		API.showCursor(true);
+		dbx_isenabled = true;
+		dbx_fieldHolder = 0;
+	}
+	else if (eventName == "dbx_text_scroll_pre") {
+		if (!(0 in args)) {
+			API.triggerServerEvent("dbx_log", "[DBX Error] You didn't input any arguments when using 'dbx_text_scroll'.");
+			return;
+		}
+
+		dbx_finishfunction = args[0];
+		if (dbx_finishfunction == "") {
+			API.triggerServerEvent("dbx_log", "[DBX Error] No return function has been given in 'dbx_text_scroll'.");
+			return;
+		}
+
+		dbx_title = args[1];
+		dbx_text = args[2];
+		dbx_button_count = args[3];
+
+
+		var lastarg = 0;
+		dbx_buttontext = [];
+		for (var i = 0; i < dbx_button_count; i++) {
+			dbx_buttontext.push(args[4][i]);
+			lastarg++;
+		}
+
+		dbx_fieldtext = [];
+		dbx_field_count = 0;
+		for (var i = 0; i < args[4][lastarg].Count; i++) {
+			dbx_fieldtext.push(args[4][lastarg][i]);
 			dbx_field_count++;
 		}
 
@@ -239,7 +338,7 @@ API.onUpdate.connect(function () {
 			API.drawText("3", (res.Width / 2) + (wsize / 2) - 44.5, (res.Height / 2) - (hsize / 2) + 178, 0.4, 200, 200, 200, 255, 3, 1, true, true, 0); // up
 		}
 
-		if (dbx_fieldHolder < dbx_field_count - 9) {
+		if (dbx_fieldHolder < dbx_field_count - dbx_display_fields) {
 			API.drawText("4", (res.Width / 2) + (wsize / 2) - 44.5, (res.Height / 2) - (hsize / 2) + 440, 0.4, scrollarrow_r, scrollarrow_g, scrollarrow_b, scrollarrow_a, 3, 1, true, true, 0); // down
 		}
 		else {
@@ -247,12 +346,17 @@ API.onUpdate.connect(function () {
 		}
 
 		// Scrollbar Blip
-		API.drawRectangle((res.Width / 2) + (wsize / 2) - 57.5, (res.Height / 2) - (hsize / 2) + 213 + ((bsize / (dbx_field_count - 8)) * dbx_fieldHolder), 25, bsize / (dbx_field_count - 8), 150, 150, 150, 200);
+		if (dbx_field_count > dbx_display_fields) {
+			API.drawRectangle((res.Width / 2) + (wsize / 2) - 57.5, (res.Height / 2) - (hsize / 2) + 213 + ((bsize / (dbx_field_count - (dbx_display_fields - 1))) * dbx_fieldHolder), 25, bsize / (dbx_field_count - (dbx_display_fields - 1)), 150, 150, 150, 200);
+		}
+		else {
+			API.drawRectangle((res.Width / 2) + (wsize / 2) - 57.5, (res.Height / 2) - (hsize / 2) + 213, 25, bsize, 150, 150, 150, 200);
+		}
 
 		// Textfields
 		var fieldcounter = 0;
 		for (var i = 0; i < dbx_field_count; i++) {
-			if (i >= dbx_fieldHolder && i < dbx_fieldHolder + 9) {
+			if (i >= dbx_fieldHolder && i < dbx_fieldHolder + dbx_display_fields) {
 				API.drawText(dbx_fieldtext[i], (res.Width / 2) - (wsize / 2) + 40, (res.Height / 2) - (hsize / 2) + 190 + (fieldcounter * 30), 0.35, txtfield_r, txtfield_g, txtfield_b, txtfield_a, 0, 0, true, true, wsize - 60);
 				fieldcounter++;
 			}
@@ -266,9 +370,9 @@ API.onUpdate.connect(function () {
 
 		// Checking cursor
 		var wmin = (res.Width / 2) + (wsize / 2) - 57.5;
-		var hmin = (res.Height / 2) - (hsize / 2) + 213 + ((bsize / (dbx_field_count - 8)) * dbx_fieldHolder);
+		var hmin = (res.Height / 2) - (hsize / 2) + 213 + ((bsize / (dbx_field_count - (dbx_display_fields - 1))) * dbx_fieldHolder);
 		var wmax = wmin + 25;
-		var hmax = hmin + (bsize / (dbx_field_count - 8));
+		var hmax = hmin + (bsize / (dbx_field_count - (dbx_display_fields - 1)));
 		var hmid = ((hmax - hmin) / 2) + hmin;
 
 		if (API.isControlPressed(24)) {
@@ -297,7 +401,7 @@ API.onUpdate.connect(function () {
 				hmax = hmin + 40;
 
 				if (pf.X >= wmin && pf.X <= wmax && pf.Y >= hmin && pf.Y <= hmax) { // down
-					if (dbx_fieldHolder < dbx_field_count - 9) {
+					if (dbx_fieldHolder < dbx_field_count - dbx_display_fields) {
 						dbx_fieldHolder++;
 					}
 				}
@@ -311,15 +415,15 @@ API.onUpdate.connect(function () {
 		if (dbx_holdingLMB) {
 			var pf = API.getCursorPositionMaintainRatio();
 
-			if (pf.Y >= hmid + ((bsize / (dbx_field_count - 8)) / 2) && dbx_fieldHolder < dbx_field_count - 9) {
+			if (pf.Y >= hmid + ((bsize / (dbx_field_count - (dbx_display_fields - 1))) / 2) && dbx_fieldHolder < dbx_field_count - 9) {
 				dbx_fieldHolder++;
 			}
-			else if (pf.Y <= hmid - ((bsize / (dbx_field_count - 8)) / 2) && dbx_fieldHolder > 0) {
+			else if (pf.Y <= hmid - ((bsize / (dbx_field_count - (dbx_display_fields - 1))) / 2) && dbx_fieldHolder > 0) {
 				dbx_fieldHolder--;
 			}
 		}
 
-		if (API.isControlPressed(16) && dbx_fieldHolder < dbx_field_count - 9) { // scroll down
+		if (API.isControlPressed(16) && dbx_fieldHolder < dbx_field_count - dbx_display_fields) { // scroll down
 			dbx_fieldHolder++;
 		}
 		if (API.isControlPressed(17) && dbx_fieldHolder > 0) { // scroll up
@@ -350,7 +454,7 @@ API.onUpdate.connect(function () {
 
 API.onKeyDown.connect(function (sender, e) {
 	// Down arrow (keyboard)
-	if (e.KeyCode == Keys.Down && dbx_fieldHolder < dbx_field_count - 9) {
+	if (e.KeyCode == Keys.Down && dbx_fieldHolder < dbx_field_count - dbx_display_fields) {
 		dbx_fieldHolder++;
 	}
 
