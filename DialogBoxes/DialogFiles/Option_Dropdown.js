@@ -10,8 +10,8 @@ var background_b = 0;
 var background_a = 200;
 
 var title_r = 255;
-var title_g = 0;
-var title_b = 0;
+var title_g = 211;
+var title_b = 56;
 var title_a = 255;
 
 var text_r = 255;
@@ -143,6 +143,44 @@ API.onServerEventTrigger.connect(function (eventName, args) {
 		dbx_fieldHolder = 0;
 		dbx_selectedfield = 0;
 	}
+	else if (eventName == "dbx_option_dropdown_list") {
+		if (!(0 in args)) {
+			API.triggerServerEvent("dbx_log", "[DBX Error] You didn't input any arguments when using 'dbx_option_dropdown'.");
+			return;
+		}
+
+		dbx_finishfunction = args[0];
+		if (dbx_finishfunction == "") {
+			API.triggerServerEvent("dbx_log", "[DBX Error] No return function has been given in 'dbx_option_dropdown'.");
+			return;
+		}
+
+		dbx_title = args[1];
+		dbx_text = args[2];
+		dbx_button_count = args[3];
+
+		var lastarg = 0;
+		dbx_buttontext = [];
+		for (var i = 0; i < dbx_button_count; i++) {
+			dbx_buttontext.push(args[4][i]);
+			lastarg++;
+		}
+
+		dbx_fieldtext = [];
+		dbx_field_count = 0;
+		for (var i = 0; i < args[4][lastarg].Count; i++) {
+			dbx_fieldtext.push(args[4][lastarg][i]);
+			dbx_field_count++;
+		}
+
+		hsize = 555;
+		bsize = 237;
+
+		API.showCursor(true);
+		dbx_isenabled = true;
+		dbx_fieldHolder = 0;
+		dbx_selectedfield = 0;
+	}
 	else if (eventName == "dbx_option_dropdown") {
 		if (!(0 in args)) {
 			API.triggerServerEvent("dbx_log", "[DBX Error] You didn't input any arguments when using 'dbx_option_dropdown'.");
@@ -246,7 +284,7 @@ API.onUpdate.connect(function () {
 		API.drawRectangle((res.Width / 2) - (wsize / 2) + 30, (res.Height / 2) - (hsize / 2) + 180, wsize - 60, 45, 200, 200, 200, 200);
 
 		// Dropdown-arrow
-		API.drawText("4", (res.Width / 2) - (wsize / 2) + wsize - 50, (res.Height / 2) - (hsize / 2) + 179, 0.3, 255, 255, 255, 255, 3, 1, true, true, 0);
+		API.drawText("4", (res.Width / 2) - (wsize / 2) + wsize - 50, (res.Height / 2) - (hsize / 2) + 183, 0.3, 255, 255, 255, 255, 3, 1, true, true, 0);
 
 		// Dropdown-def-text
 		API.drawText(dbx_fieldtext[dbx_selectedfield], (res.Width / 2) - (wsize / 2) + 55, (res.Height / 2) - (hsize / 2) + 189, 0.33, 255, 255, 255, 255, 0, 0, true, true, 0);
@@ -280,7 +318,12 @@ API.onUpdate.connect(function () {
 			}
 
 			// Dropdown-scroll-blip
-			API.drawRectangle((res.Width / 2) + (wsize / 2) - 67.5, (res.Height / 2) - (hsize / 2) + 260 + ((bsize / (dbx_field_count - (dbx_display_fields - 1))) * dbx_fieldHolder), 35, bsize / (dbx_field_count - (dbx_display_fields - 1)), 150, 150, 150, 200);
+			if (dbx_field_count > dbx_display_fields) {
+				API.drawRectangle((res.Width / 2) + (wsize / 2) - 67.5, (res.Height / 2) - (hsize / 2) + 260 + ((bsize / (dbx_field_count - (dbx_display_fields - 1))) * dbx_fieldHolder), 35, bsize / (dbx_field_count - (dbx_display_fields - 1)), 150, 150, 150, 200);
+			}
+			else {
+				API.drawRectangle((res.Width / 2) + (wsize / 2) - 67.5, (res.Height / 2) - (hsize / 2) + 260, 35, bsize, 150, 150, 150, 200);
+			}
 
 			// Dropdown-textfields
 			var fieldcounter = 0;
@@ -389,14 +432,20 @@ API.onUpdate.connect(function () {
 
 API.onKeyDown.connect(function (sender, e) {
 	if (dbx_isenabled) {
-		if (dbx_ishovered || dbx_isadvancedhovered) {
-			// Down arrow (keyboard)
-			if (e.KeyCode == Keys.Down && dbx_fieldHolder < dbx_field_count - dbx_display_fields) {
+		// Down arrow (keyboard)
+		if (e.KeyCode == Keys.Down && dbx_selectedfield + 1 < dbx_field_count) {
+			dbx_selectedfield++;
+
+			if (dbx_selectedfield + 1 > dbx_display_fields + dbx_fieldHolder && dbx_fieldHolder < dbx_field_count - dbx_display_fields) {
 				dbx_fieldHolder++;
 			}
+		}
 
-			// Up arrow (keyboard)
-			if (e.KeyCode == Keys.Up && dbx_fieldHolder > 0) {
+		// Up arrow (keyboard)
+		if (e.KeyCode == Keys.Up && dbx_selectedfield - 1 >= 0) {
+			dbx_selectedfield--;
+
+			if (dbx_selectedfield < dbx_fieldHolder && dbx_fieldHolder > 0) {
 				dbx_fieldHolder--;
 			}
 		}
