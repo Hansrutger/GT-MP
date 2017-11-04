@@ -10,8 +10,8 @@ var background_b = 0;
 var background_a = 200;
 
 var title_r = 255;
-var title_g = 0;
-var title_b = 0;
+var title_g = 211;
+var title_b = 56;
 var title_a = 255;
 
 var text_r = 255;
@@ -156,6 +156,9 @@ API.onServerEventTrigger.connect(function (eventName, args) {
 		API.showCursor(true);
 		API.setCanOpenChat(false);
 		dbx_isenabled = true;
+
+		dbx_censorText = "";
+		dbx_realText = "";
 	}
 	else if (eventName == "dbx_text_input") {
 
@@ -285,32 +288,34 @@ API.onUpdate.connect(function () {
 });
 
 API.onKeyDown.connect(function (sender, e) {
-	if (!dbx_isenabled_keylock) {
-		switch (e.KeyCode) {
-			case Keys.Back:
-				if (dbx_realText.length != 0) {
-					dbx_realText = dbx_realText.substring(0, dbx_realText.length - 1);
-					dbx_censorText = dbx_censorText.substring(0, dbx_censorText.length - 1);
-				}
-				break;
-			case Keys.Enter:
-			case Keys.Alt:
-			case Keys.Control:
-			case Keys.Shift:
-				// Had to add otherwise it would go into default
-				break;
-			default:
-				if (dbx_iscensored) {
-					dbx_censorText += "*";
-					dbx_realText += API.getCharFromKey(e.KeyValue, e.Shift, e.Control, e.Alt);
-				}
-				else {
-					dbx_realText += API.getCharFromKey(e.KeyValue, e.Shift, e.Control, e.Alt);
-				}
-				break;
+	if (dbx_isenabled) {
+		if (!dbx_isenabled_keylock) {
+			switch (e.KeyCode) {
+				case Keys.Back:
+					if (dbx_realText.length != 0) {
+						dbx_realText = dbx_realText.substring(0, dbx_realText.length - 1);
+						dbx_censorText = dbx_censorText.substring(0, dbx_censorText.length - 1);
+					}
+					break;
+				case Keys.Enter:
+				case Keys.Alt:
+				case Keys.Control:
+				case Keys.Shift:
+					// Had to add otherwise it would go into default
+					break;
+				default:
+					if (dbx_iscensored) {
+						dbx_censorText += "*";
+						dbx_realText += API.getCharFromKey(e.KeyValue, e.Shift, e.Control, e.Alt);
+					}
+					else {
+						dbx_realText += API.getCharFromKey(e.KeyValue, e.Shift, e.Control, e.Alt);
+					}
+					break;
+			}
+			dbx_isenabled_keylock = true;
+			API.after(50, "dbx_EnableKeys");
 		}
-		dbx_isenabled_keylock = true;
-		API.after(50, "dbx_EnableKeys");
 	}
 });
 
