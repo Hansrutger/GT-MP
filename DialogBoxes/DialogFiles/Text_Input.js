@@ -300,13 +300,18 @@ API.onKeyDown.connect(function (sender, e) {
 				case Keys.Enter:
 				case Keys.Alt:
 				case Keys.Control:
+				case Keys.Escape:
 				case Keys.Shift:
 					// Had to add otherwise it would go into default
 					break;
 				default:
 					if (dbx_iscensored) {
-						dbx_censorText += "*";
 						dbx_realText += API.getCharFromKey(e.KeyValue, e.Shift, e.Control, e.Alt);
+
+						dbx_censorText = "";
+						for (var i = 0; i < dbx_realText.length; i++) {
+							dbx_censorText += "*";
+						}
 					}
 					else {
 						dbx_realText += API.getCharFromKey(e.KeyValue, e.Shift, e.Control, e.Alt);
